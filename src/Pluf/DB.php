@@ -72,7 +72,7 @@ function Pluf_DB_getConnection($extra=null)
                                       Pluf::f('db_login'), 
                                       Pluf::f('db_password'),
                                       Pluf::f('db_table_prefix'), 
-                                      Pluf::f('debug'),
+                                      Pluf::f('db_debug'),
                                       Pluf::f('db_version'));
     return $GLOBALS['_PX_db'];
 }
@@ -207,13 +207,17 @@ function Pluf_DB_IntegerToDb($val, $db) {
 }
 
 function Pluf_DB_PasswordToDb($val, $db) {
-    $exp = explode(':', $val);
-    if (in_array($exp[0], array('sha1', 'md5', 'crc32'))) {
-        return $db->esc($val);
-    }
+    //$exp = explode(':', $val);
+    //if (in_array($exp[0], array('sha1', 'md5', 'crc32'))) {
+    //    return $db->esc($val);
+    //}
     // We need to hash the value.
-    $salt = Pluf_Utils::getRandomString(5);
-    return $db->esc('sha1:'.$salt.':'.sha1($salt.$val));
+    //$salt = Pluf_Utils::getRandomString(5);
+    //return $db->esc('sha1:'.$salt.':'.sha1($salt.$val));
+    if (base64_encode(base64_decode($val)) == $val)
+	return $db->esc($val);
+    else
+    	return $db->esc(base64_encode(sha1($val, TRUE)));
 }
 
 function Pluf_DB_SlugToDB($val, $db) {

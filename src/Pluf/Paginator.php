@@ -289,6 +289,7 @@ class Pluf_Paginator
                 }
             }
         }
+	//print_r($this->list_display);
         if (is_array($search_fields)) {
             $this->search_fields = $search_fields;
         }
@@ -667,6 +668,7 @@ class Pluf_Paginator
                     $name = $col;
                     $field = $key;
                 }
+		//print_r($this->list_display);
                 if (!$this->sort_link_title) {
                     $out .= '<th><span class="px-header-title">'.Pluf_esc(ucfirst($name)).'</span>'.$this->headerSortLinks($field).'</th>';
                 } else {

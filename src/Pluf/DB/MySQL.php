@@ -28,7 +28,7 @@ class Pluf_DB_MySQL
 {
     public $con_id;
     public $pfx = '';
-    private $debug = false;
+    private $debug = true;
     /** The last query, set with debug(). Used when an error is returned. */
     public $lastquery = '';
     public $engine = 'MySQL';

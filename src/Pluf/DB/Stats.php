@@ -77,7 +77,7 @@ function Pluf_DB_Stats_getConnection($extra=null)
                                        Pluf::f('db_login'), 
                                        Pluf::f('db_password'),
                                        Pluf::f('db_table_prefix'), 
-                                       Pluf::f('debug'),
+				       Pluf::f('db_debug'),
                                        Pluf::f('db_version'))
                                            );
     return $GLOBALS['_PX_db'];

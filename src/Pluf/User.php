@@ -136,7 +136,7 @@ class Pluf_User extends Pluf_Model
                             array(
                                   'type' => 'Pluf_DB_Field_Varchar',
                                   'blank' => true,
-                                  'default' => 'Europe/Berlin',
+                                  'default' => 'America/Chicago',
                                   'size' => 45,
                                   'verbose' => __('time zone'),
                                   'help_text' => __('Time zone of the user to display the time in local time.')
@@ -235,8 +235,11 @@ class Pluf_User extends Pluf_Model
      */
     function setPassword($password)
     {
-        $salt = Pluf_Utils::getRandomString(5);
-        $this->password = 'sha1:'.$salt.':'.sha1($salt.$password);
+        //$salt = Pluf_Utils::getRandomString(5);
+        //$this->password = 'sha1:'.$salt.':'.sha1($salt.$password);
+	//$this->password = sha1($password);
+	//file_put_contents("/tmp/test", $password);
+	$this->password = base64_encode(sha1($password, TRUE));
         return true;
     }
 
@@ -251,12 +254,16 @@ class Pluf_User extends Pluf_Model
         if ($this->password == '') {
             return false;
         }
-        list($algo, $salt, $hash) = explode(':', $this->password);
+	if ($this->password == base64_encode(sha1($password, TRUE)))
+		return true;
+	else
+		return false;
+        /*list($algo, $salt, $hash) = explode(':', $this->password);
         if ($hash == $algo($salt.$password)) {
             return true;
         } else {
             return false;
-        }
+        }*/
     }
 
     /**
